@@ -11,28 +11,16 @@
 //  way altering the source code is strictly prohibited, unless the prior
 //  written consent of ROJ is obtained.
 //
-//! \file app.h
-//! \brief Application.
+//! \file custom.h
+//! \brief Customization.
 //!
 //! \author Marco Arlone (marco.arlone@vandewiele.com)
 // ___________________________________________________________________________
 
-#include <stdio.h>
-#include "gpio.h"
-#include "app.h"
+#include <usart.h>
 
-// ___________________________________________________________________________
-//!	\brief Application main function (weak version).
-//!
-//!	Called by "main" function after initializations.
-// ___________________________________________________________________________
-__weak void APP_Main(void)
+int __io_putchar(int ch)
 {
-	printf("Start application...\r\n");
-
-	for (;;)
-	{
-		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-		HAL_Delay(500);
-	}
+	HAL_UART_Transmit(&hlpuart1, (uint8_t *) &ch, 1, 100);
+	return ch;
 }
